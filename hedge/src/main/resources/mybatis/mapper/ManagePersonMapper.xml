@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.puyitou.fundmanager.hedge.mapper.ManagePersonMapper">
+<!-- (按姓名模糊)查询管理人列表 -->
+<select id="selectListByName" parameterType="java.util.Map" resultType="java.util.Map"> 
+		 SELECT 
+			 a.id,
+	         a.name,
+			 a.registration_number,
+			 a.establish_time,
+			 a.registration_time
+		 FROM fm_hedge.manager a
+		<where>
+			 <if test="name != null" >
+			 a.name LIKE '%#{name}%'
+			 </if>
+		</where>
+		 ORDER BY a.create_time DESC
+ 
+</select>
+
+<!-- 按管理人ID查询详细信息 -->
+<select id="selectInfoById" parameterType="java.util.Map" resultType="java.util.Map"> 
+        	SELECT
+			    a.name,
+			    a.registration_number,
+			    a.registration_time,
+			    a.legal_represent,
+			    a.registered_address,
+			    a.registered_address,
+			    a.office_address,
+			    a.social_credit_code,
+			    a.establish_time,
+			    a.registered_capital
+			   
+		    FROM 	fm_hedge.manager a
+		    
+		    WHERE a.id=#{id}
+</select>
+
+<!-- 按管理人ID查询附件详细信息 -->
+<select id="selectAttachmentInfoById" parameterType="java.util.Map" resultType="java.util.Map"> 
+        	SELECT
+                c.id,
+			    c.file_name,
+			    c.description,
+			    c.create_time
+		    FROM 	fm_hedge.file_storage c
+		    LEFT JOIN fm_hedge.manager_attachment b on b.file_storage_id=c.id
+            LEFT JOIN fm_hedge.manager a on a.id=b.manager_id
+		    WHERE a.id=#{id} AND c.state=1
+</select>
+
+</mapper>

@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.puyitou.fundmanager.hedge.mapper.RefundMapper">
+  <resultMap id="BaseResultMap" type="com.puyitou.fundmanager.hedge.model.payment.Refund">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="payment_id" jdbcType="VARCHAR" property="paymentId" />
+    <result column="file_storage_id" jdbcType="VARCHAR" property="fileStorageId" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="refund_amount" jdbcType="DECIMAL" property="refundAmount" />
+    <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="agency_id" jdbcType="VARCHAR" property="agencyId" />
+    <result column="sub_agency_id" jdbcType="VARCHAR" property="subAgencyId" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="create_time" jdbcType="BIGINT" property="createTime" />
+    <result column="update_time" jdbcType="BIGINT" property="updateTime" />
+    <result column="delete_time" jdbcType="BIGINT" property="deleteTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, payment_id, file_storage_id, id_card, refund_amount, bank_name, agency_id, sub_agency_id, 
+    comment, state, create_time, update_time, delete_time
+  </sql>
+  <select id="selectByExample" parameterType="com.puyitou.fundmanager.hedge.model.payment.RefundExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from refund
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from refund
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from refund
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.puyitou.fundmanager.hedge.model.payment.RefundExample">
+    delete from refund
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.puyitou.fundmanager.hedge.model.payment.Refund">
+    insert into refund (id, payment_id, file_storage_id, 
+      id_card, refund_amount, bank_name, 
+      agency_id, sub_agency_id, comment, 
+      state, create_time, update_time, 
+      delete_time)
+    values (#{id,jdbcType=VARCHAR}, #{paymentId,jdbcType=VARCHAR}, #{fileStorageId,jdbcType=VARCHAR}, 
+      #{idCard,jdbcType=VARCHAR}, #{refundAmount,jdbcType=DECIMAL}, #{bankName,jdbcType=VARCHAR}, 
+      #{agencyId,jdbcType=VARCHAR}, #{subAgencyId,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, 
+      #{state,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, 
+      #{deleteTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.puyitou.fundmanager.hedge.model.payment.Refund">
+    insert into refund
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="paymentId != null">
+        payment_id,
+      </if>
+      <if test="fileStorageId != null">
+        file_storage_id,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="refundAmount != null">
+        refund_amount,
+      </if>
+      <if test="bankName != null">
+        bank_name,
+      </if>
+      <if test="agencyId != null">
+        agency_id,
+      </if>
+      <if test="subAgencyId != null">
+        sub_agency_id,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleteTime != null">
+        delete_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentId != null">
+        #{paymentId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileStorageId != null">
+        #{fileStorageId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="refundAmount != null">
+        #{refundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="agencyId != null">
+        #{agencyId,jdbcType=VARCHAR},
+      </if>
+      <if test="subAgencyId != null">
+        #{subAgencyId,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="deleteTime != null">
+        #{deleteTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.puyitou.fundmanager.hedge.model.payment.RefundExample" resultType="java.lang.Long">
+    select count(*) from refund
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update refund
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentId != null">
+        payment_id = #{record.paymentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileStorageId != null">
+        file_storage_id = #{record.fileStorageId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCard != null">
+        id_card = #{record.idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundAmount != null">
+        refund_amount = #{record.refundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bankName != null">
+        bank_name = #{record.bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agencyId != null">
+        agency_id = #{record.agencyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subAgencyId != null">
+        sub_agency_id = #{record.subAgencyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comment != null">
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.deleteTime != null">
+        delete_time = #{record.deleteTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update refund
+    set id = #{record.id,jdbcType=VARCHAR},
+      payment_id = #{record.paymentId,jdbcType=VARCHAR},
+      file_storage_id = #{record.fileStorageId,jdbcType=VARCHAR},
+      id_card = #{record.idCard,jdbcType=VARCHAR},
+      refund_amount = #{record.refundAmount,jdbcType=DECIMAL},
+      bank_name = #{record.bankName,jdbcType=VARCHAR},
+      agency_id = #{record.agencyId,jdbcType=VARCHAR},
+      sub_agency_id = #{record.subAgencyId,jdbcType=VARCHAR},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=BIGINT},
+      update_time = #{record.updateTime,jdbcType=BIGINT},
+      delete_time = #{record.deleteTime,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.puyitou.fundmanager.hedge.model.payment.Refund">
+    update refund
+    <set>
+      <if test="paymentId != null">
+        payment_id = #{paymentId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileStorageId != null">
+        file_storage_id = #{fileStorageId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="refundAmount != null">
+        refund_amount = #{refundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="bankName != null">
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="agencyId != null">
+        agency_id = #{agencyId,jdbcType=VARCHAR},
+      </if>
+      <if test="subAgencyId != null">
+        sub_agency_id = #{subAgencyId,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="deleteTime != null">
+        delete_time = #{deleteTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.puyitou.fundmanager.hedge.model.payment.Refund">
+    update refund
+    set payment_id = #{paymentId,jdbcType=VARCHAR},
+      file_storage_id = #{fileStorageId,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      refund_amount = #{refundAmount,jdbcType=DECIMAL},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      agency_id = #{agencyId,jdbcType=VARCHAR},
+      sub_agency_id = #{subAgencyId,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      state = #{state,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      delete_time = #{deleteTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
